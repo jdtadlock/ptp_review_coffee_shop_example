@@ -1,0 +1,21 @@
+{
+  "name": "coffee_shop_example3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mysql2": "^2.0.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^5.21.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nodemon server.js & cd ./client && npm start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
