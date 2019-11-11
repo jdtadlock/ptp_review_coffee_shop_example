@@ -14,19 +14,22 @@ passport.deserializeUser((id, done) => {
 // Local expects a body.username and a body.password by default
 passport.use(new LocalStrategy(
   {
-    usernameField: 'email'
+    usernameField: 'email' // change the default to email instead
   },
-  (username, password, done) => {
-    // User.findOne({ username: username }, (err, user) => {
-    //   if (err) { return done(err); }
-    //   if (!user) {
-    //     return done(null, false, { message: 'Incorrect username.' });
-    //   }
-    //   if (!user.validPassword(password)) {
-    //     return done(null, false, { message: 'Incorrect password.' });
-    //   }
-    //   return done(null, user);
-    // });
+  (email, password, done) => {
+    User.findOne({
+      where: { email }
+    }).then(user => {
+      if (!user) {
+        return done(null, false, 'No user exists with that email.');
+      }
+
+      if (user.password !== password) {
+        return done(null, false, 'Wrong Password');
+      }
+
+      return done(null, user);
+    }).catch(err => res.status(503).send({ message: err }));
   }
 ));
 

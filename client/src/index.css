@@ -29,6 +29,10 @@ header {
   align-items: center;
 }
 
+header nav span {
+  margin-right: 15px;
+}
+
 /* Global Classes */
 .row, .column {
   display: flex;
@@ -40,6 +44,10 @@ header {
 
 .split {
   justify-content: space-between;
+}
+
+.container {
+  padding: 25px;
 }
 
 

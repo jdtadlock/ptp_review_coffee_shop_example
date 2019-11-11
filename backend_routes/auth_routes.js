@@ -1,9 +1,23 @@
 const router = require('express').Router();
 const { User } = require('../models');
+const passport = require('../auth/passport');
 
-// router.post('/auth/login', (req, res) => {
-//   passport.authenticate
-// })
+router.post('/auth/login', (req, res, next) => {
+  // authenticate will look at the req.body and will be expecting
+  // req.body.username and req.body.password
+  passport.authenticate('local', (err, user, message) => {
+    if (!user) return res.status(403).send({ message });
+
+    req.login(user, err => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send({ message: err });
+      }
+
+      res.send({ user });
+    });
+  })(req, res, next);
+});
 
 router.post('/auth/register', (req, res) => {
   User.findOne({

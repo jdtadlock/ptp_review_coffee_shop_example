@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import axios from 'axios';
+import { connectStore } from '../store';
 
 class Profile extends Component {
   state = {
@@ -8,38 +7,17 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    axios.get('/auth/isauth')
-      .then(res => {
-        if (res.data.user) {
-          this.setState({
-            email: res.data.user.email
-          });
-        } else this.props.history.push('/')
-      })
-  }
-
-  logOut = () => {
-    axios.get('/auth/logout')
-      .then(res => {
-        this.props.history.push('/');
-      })
+    this.props.isAuth();
   }
 
 
   render() {
     return (
       <div>
-        <header className="row split">
-          <h3>Logo</h3>
-          <nav>
-            <span>{this.state.email}</span>
-            <button onClick={this.logOut}>Log Out</button>
-          </nav>
-        </header>
         <h1>Profile</h1>
       </div>
     );
   }
 }
 
-export default withRouter(Profile);
+export default connectStore(Profile);
